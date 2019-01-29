@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!-- db연결 설정 -->
+  <properties resource="kr/or/ddit/db/mybatis/db.properties"/>
+  
+  <!-- vo 별칭 부여 -->
+  <typeAliases>
+  	<typeAlias alias="UserVO" type="kr.or.ddit.user.model.UserVO"/>
+  	<typeAlias alias="LprodVO" type="kr.or.ddit.lprod.model.LprodVO"/>
+  	<typeAlias alias="ProdVO" type="kr.or.ddit.lprod.model.ProdVO"/>
+  </typeAliases>
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <!-- mapper 설정 -->
+  <mappers>
+    <mapper resource="kr/or/ddit/db/mybatis/mapper/user.xml"/>
+    <mapper resource="kr/or/ddit/db/mybatis/mapper/lprod.xml"/>
+  </mappers>
+</configuration>

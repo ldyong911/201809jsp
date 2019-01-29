@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+  <!-- 전체 사용자 조회 -->
+  <select id="getAllUser" resultType="UserVO">
+    select *
+      from users
+  </select>
+  
+  <!-- 특정 사용자 조회(userId) selectUser(String userId) query, dao(test), service(test) -->
+  <select id="selectUser" resultType="UserVO" parameterType="String">
+  	select *
+  	  from users
+  	 where userId = #{sss}
+  </select>
+</mapper>
