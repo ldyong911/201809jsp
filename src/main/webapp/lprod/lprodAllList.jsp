@@ -48,6 +48,8 @@
                 	List<LprodVO> lprodList = (List<LprodVO>)request.getAttribute("lprodList");
     		
     				for(int i=0; i<lprodList.size(); i++){
+    					//data-변수이름 을 통해 JQuery로 $(this).data("변수이름") 이렇게 값을 가져올 수 있음
+    					//예)data-lprodgu를 통해 JQuery로 $(this).data("lprodgu") 이렇게 값을 가져올 수 있음
     					out.write("<tr class='lprodTr' data-lprodgu='" + lprodList.get(i).getLprod_gu() + "'>");
     					out.write("<td>"+lprodList.get(i).getLprod_id()+"</td>");
     					out.write("<td>"+lprodList.get(i).getLprod_gu()+"</td>");
@@ -81,16 +83,16 @@
 				console.log("lprodTr click");
 				//클릭한 userTr태그의 userId 값을 출력
 // 				console.log($(this).children()[1].innerText);
-// 				console.log("data-userid : " + $(this).data("userid"));
+// 				console.log("data-lprodgu : " + $(this).data("lprodgu"));
 				
 				var lprod_gu = $(this).data("lprodgu");
 				
 				// 1.document
-// 				document.location = "/user?userId=" + userId;
+// 				document.location = "/prodList?lprod_gu=" + lprod_gu;
 				
 				// 2.form
 				$("#lprod_gu").val(lprod_gu);
-// 				$("#frm").attr("action", "/prod"); //속성바꿀때 사용
+// 				$("#frm").attr("action", "/prodList"); //속성바꿀때 사용
 				$("#frm").submit();
 				
 			});
