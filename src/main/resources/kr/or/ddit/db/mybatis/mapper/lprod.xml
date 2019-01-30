@@ -15,4 +15,22 @@
   	  from prod
   	 where prod_lgu = #{sss}
   </select>
+  
+  <!-- lprod 페이지 조회 -->
+  <select id="selectLprodPagingList" resultType="LprodVO" parameterType="PageVO">
+  	select *
+      from
+         (select a.*, rownum rn
+            from
+               (select lprod.*
+                  from lprod
+                 order by lprod_id) a) a
+ 	 where rn between (#{page}-1)*#{pageSize}+1 and #{page}*#{pageSize}
+  </select>
+  
+  <!-- 전체 lprod수 조회 -->
+  <select id="getLprodCnt" resultType="Integer">
+  	select count(*)
+  	  from lprod
+  </select>
 </mapper>

@@ -11,6 +11,7 @@
   	<typeAlias alias="UserVO" type="kr.or.ddit.user.model.UserVO"/>
   	<typeAlias alias="LprodVO" type="kr.or.ddit.lprod.model.LprodVO"/>
   	<typeAlias alias="ProdVO" type="kr.or.ddit.lprod.model.ProdVO"/>
+  	<typeAlias alias="PageVO" type="kr.or.ddit.util.model.PageVO"/>
   </typeAliases>
   
   <environments default="development">

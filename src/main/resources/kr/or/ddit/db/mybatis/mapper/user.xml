@@ -15,4 +15,23 @@
   	  from users
   	 where userId = #{sss}
   </select>
+  
+  <!-- 사용자 페이징 조회 -->
+  <select id="selectUserPagingList" resultType="UserVO" parameterType="PageVO">
+  	select *
+      from
+         (select a.*, rownum rn
+            from
+               (select users.*
+                  from users
+                 order by userId) a) a
+ 	 where rn between (#{page}-1)*#{pageSize}+1 and #{page}*#{pageSize}
+  </select>
+  
+  <!-- 전체 사용자 수 조회 -->
+  <select id="getUserCnt" resultType="Integer">
+  	select count(*)
+      from users
+  </select>
+  
 </mapper>
