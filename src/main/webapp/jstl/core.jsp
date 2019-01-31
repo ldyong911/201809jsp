@@ -29,6 +29,11 @@
 		pageContext.setAttribute("userId", "brown");
 		session.setAttribute("userId", "brown");
 	 -->
+	<!-- 
+		var : 값을 설정할 EL변수의 이름
+		value : 변수의 값을 설정(표현식, EL, 상수 사용 가능)
+		scope : 변수가 저장되는 영역 설정(page|request|session|application 생략가능, 생략시 기본값은 page)
+	 -->
 	<c:set var="userId" value="brown" scope="session"/>
 	userId(표현식-page) : <%=pageContext.getAttribute("userId") %> <br>
 	userId(표현식-session) : <%=session.getAttribute("userId") %> <br>
