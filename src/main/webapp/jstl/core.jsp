@@ -38,6 +38,11 @@
 		RangerVO rangerVO = new RangerVO("brown", "브라운", 8);
 		session.setAttribute("ranger", rangerVO);
 	%>
+	<!-- 
+		target : 속성값을 설정할 대상 bean객체 or Map객체(표현식, EL변수 사용가능)
+		property : 설정할 bean객체의 멤버변수 이름(setter가 있는) or Map객체의 key 이름
+		value : 속성값
+	 -->
 	<c:set target="${ranger}" property="age" value="5"/>
 	ranger - 나이변경 : ${ranger} <br>
 	

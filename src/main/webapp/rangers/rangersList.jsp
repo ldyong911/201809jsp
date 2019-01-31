@@ -29,11 +29,12 @@
 	</table>
 	
 	<h2>jstl / EL</h2>
+	<!-- EL은 scope 기본객체 영역에 있는 속성을 사용하며 속성명으로만 검색가능 -->
 	<table>
 		<tr>
 			<th>이름</th>
 		</tr>
-		<c:forEach items="${rangersList}" var="ranger">
+		<c:forEach items="${rangersList}" var="ranger"> <!-- items에 속성명으로 세팅, var는 내가 사용할 변수를 지정 -->
 			<tr>
 				<td>${ranger}</td>
 			</tr>
@@ -49,8 +50,11 @@
 		</tr>
 		<c:forEach items="${rangersVOList}" var="ranger">
 			<tr>
-				<!-- ranger.name이면 name의 getName을 호출하며 el을 사용하기위해선 getter 필수 -->
-				<td>${ranger.name} / ${ranger.getName()}</td>
+				<!-- 
+					name은 scope영역에 설정된 속성명이며
+					ranger.name이면 name의 getName을 호출하며 el을 사용하기위해선 getter 필수
+				 -->
+				<td>${ranger.name} / ${ranger.getName()}</td> <!-- 두개 같은 의미임 -->
 				<td>${ranger.alias}</td>
 				<td>${ranger.age}</td>
 			</tr>
@@ -59,14 +63,20 @@
 	
 	<h2>동일한 속성명</h2>
 	userName(requset - 표현식) : <%=request.getAttribute("userName") %> <br>
+	<!--
+		EL에서 동일 속성명이면 작은영역부터 차례대로 검색되며
+		pageScope, requestScope, sessionScope, applicationScope으로 지정된 스코프 영역명을
+		명시적으로 사용하여 검색가능
+	 -->
 	userName(EL-default) : ${userName} <br>
 	userName(EL-request) : ${requestScope.userName} <br>
 	userName(EL-session) : ${sessionScope.userName} <br>
 	userName(EL-application) : ${applicationScope.userName} <br>
 	
 	<h2>EL 기본객체 param</h2>
-	표현식 : <%=request.getParameter("p") %> <br>
-	EL : ${param.p} <br> 
+	<!-- EL의 기본객체는 기본객체명으로 사용가능 -->
+	표현식 : <%=request.getParameter("p")%> <br>
+	EL : ${param.p} <br>
 	
 	<!-- localhost/rangersList -->
 </body>
