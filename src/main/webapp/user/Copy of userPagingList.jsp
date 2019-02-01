@@ -1,8 +1,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,17 +46,75 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach items="${userList}" var="user" varStatus="i">
-              		<tr class="userTr" data-userid="${user.userId}">
-              			<td>${i.index+1}</td>
-              			<td>${user.userId}</td>
-              			<td>${user.userNm}</td>
-              			<td>--</td>
-              			<td>${user.reg_dt_fmt}</td>
-              		</tr>
-              	</c:forEach>
+                <%
+                	List<UserVO> userList = (List<UserVO>)request.getAttribute("userList");
+    		
+    				for(int i=0; i<userList.size(); i++){
+    					out.write("<tr class='userTr' data-userid='" + userList.get(i).getUserId() + "'>");
+    					out.write("<td>"+(i+1)+"</td>");
+    					out.write("<td>"+userList.get(i).getUserId()+"</td>");
+    					out.write("<td>"+userList.get(i).getUserNm()+"</td>");
+    					out.write("<td>"+"---"+"</td>");
+    					out.write("<td>"+userList.get(i).getReg_dt_fmt()+"</td>");
+    					out.write("</tr>");
+    				}
+                %>
+                
               </tbody>
             </table>
+            	<%
+            		int userCnt = (Integer)request.getAttribute("userCnt");
+            		int pageSize = (Integer)request.getAttribute("pageSize");
+            		int cpage = (Integer)request.getAttribute("page");
+            		int lastPage = (int)Math.ceil((userCnt*1.0)/pageSize);
+            		String cp = request.getContextPath();
+            	%>
+            	
+            	<nav style="text-align:center;"> 
+				  <ul class="pagination">
+				  	<!-- 첫번째 페이지 -->
+				  	<%if(cpage == 1){%>
+	    				<li class="disabled">
+	    					<a aria-label="Previous">
+				        		<span aria-hidden="true">&laquo;</span>
+				      		</a>
+				      	</li>
+	    			<%}else{%>
+	    				<li>
+	    					<a href="<%=cp%>/userPagingList?page=1" aria-label="Previous">
+				        		<span aria-hidden="true">&laquo;</span>
+				      		</a>
+				      	</li>
+				    <%} %>
+				    
+				    <!-- 페이지 -->
+				    <%
+            			for(int i=1; i<=lastPage; i++ ){%>
+		            		<li
+		            			<%if(i == cpage){%>
+				    				class="active"
+				    			<%}%>
+				    		><a href="<%=cp%>/userPagingList?page=<%=i%>"><%=i%></a>
+				    		</li>
+            		<%	}%>
+            		
+            		<!-- 마지막페이지 -->
+            		<%if(cpage == lastPage){%>
+	    				<li class="disabled">
+	    					<a aria-label="Next">
+				        		<span aria-hidden="true">&raquo;</span>
+				      		</a>
+				      	</li>
+	    			<%}else{%>
+	    				<li>
+	    					<a href="<%=cp%>/userPagingList?page=<%=lastPage%>" aria-label="Next">
+				        		<span aria-hidden="true">&raquo;</span>
+				      		</a>
+				      	</li>
+				    <%} %>
+				    
+				  </ul>
+				</nav>
           </div>
         </div>
       </div>
@@ -98,23 +155,7 @@
 			
 		});
 	</script>
-	
-	<%
-		//EL로 scope영역 객체에 접근하기위한 방법
-		
-		pageContext.getRequest().equals(request);
-		pageContext.getSession().equals(session);
-		
-		request.getContextPath();
-		((HttpServletRequest)pageContext.getRequest()).getContextPath();
-		
-		application.getContextPath();
-		
-		((HttpServletRequest)pageContext.getRequest()).getContextPath();
-		pageContext.getServletContext().getContextPath();
-	%>
-	<!-- EL로 변환 -->
-	<form id ="frm" action="${pageContext.servletContext.contextPath}/user" method="get">
+	<form id ="frm" action="<%=request.getContextPath()%>/user" method="get">
 		<input type="hidden" id="userId" name="userId"/>
 	</form>
   </body>

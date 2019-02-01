@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,7 +19,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="<%=request.getContextPath() %>/css/dashboard.css" rel="stylesheet">
+    <link href="${pageContext.servletContext.contextPath}/css/dashboard.css" rel="stylesheet">
 	
   </head>
 
@@ -45,71 +46,66 @@
                 </tr>
               </thead>
               <tbody>
-                <%
-                	List<UserVO> userList = (List<UserVO>)request.getAttribute("userList");
-    		
-    				for(int i=0; i<userList.size(); i++){
-    					out.write("<tr class='userTr' data-userid='" + userList.get(i).getUserId() + "'>");
-    					out.write("<td>"+(i+1)+"</td>");
-    					out.write("<td>"+userList.get(i).getUserId()+"</td>");
-    					out.write("<td>"+userList.get(i).getUserNm()+"</td>");
-    					out.write("<td>"+"---"+"</td>");
-    					out.write("<td>"+userList.get(i).getReg_dt_fmt()+"</td>");
-    					out.write("</tr>");
-    				}
-                %>
+                <c:forEach items="${userList}" var="user" varStatus="i">
+                	<tr class="userTr" data-userid="${user.userId}">
+                		<td>${i.index+1}</td>
+                		<td>${user.userId}</td>
+                		<td>${user.userNm}</td>
+                		<td>--</td>
+                		<td>${user.reg_dt_fmt}</td>
+                	</tr>
+                </c:forEach>
+                
               </tbody>
             </table>
-            	<%
-            		int userCnt = (Integer)request.getAttribute("userCnt");
-            		int pageSize = (Integer)request.getAttribute("pageSize");
-            		int cpage = (Integer)request.getAttribute("page");
-            		int lastPage = (int)Math.ceil((userCnt*1.0)/pageSize);
-            		String cp = request.getContextPath();
-            	%>
-            	
             	<nav style="text-align:center;"> 
 				  <ul class="pagination">
 				  	<!-- 첫번째 페이지 -->
-				  	<%if(cpage == 1){%>
-	    				<li class="disabled">
-	    					<a aria-label="Previous">
-				        		<span aria-hidden="true">&laquo;</span>
-				      		</a>
-				      	</li>
-	    			<%}else{%>
-	    				<li>
-	    					<a href="<%=cp%>/userPagingList?page=1" aria-label="Previous">
-				        		<span aria-hidden="true">&laquo;</span>
-				      		</a>
-				      	</li>
-				    <%} %>
+				  	<c:choose>
+				  		<c:when test="${page == '1'}">
+				  			<li class="disabled">
+	    						<a aria-label="Previous">
+				        			<span aria-hidden="true">&laquo;</span>
+				      			</a>
+				      		</li>
+				  		</c:when>
+				  		<c:otherwise>
+				  			<li>
+	    						<a href="${pageContext.servletContext.contextPath}/userPagingList?page=1" aria-label="Previous">
+				        			<span aria-hidden="true">&laquo;</span>
+				      			</a>
+				      		</li>
+				  		</c:otherwise>
+				  	</c:choose>
 				    
 				    <!-- 페이지 -->
-				    <%
-            			for(int i=1; i<=lastPage; i++ ){%>
-		            		<li
-		            			<%if(i == cpage){%>
-				    				class="active"
-				    			<%}%>
-				    		><a href="<%=cp%>/userPagingList?page=<%=i%>"><%=i%></a>
-				    		</li>
-            		<%	}%>
+            		<c:forEach begin="1" end="${lastPage}" var="i">
+           				<c:set var="active" value=""/>
+            			<c:if test="${i == page}">
+            				<c:set var="active" value="active"/>
+            			</c:if>
+            			<li class="${active}">
+            				<a href="${pageContext.servletContext.contextPath}/userPagingList?page=${i}">${i}</a>
+            			</li>
+            		</c:forEach>
             		
             		<!-- 마지막페이지 -->
-            		<%if(cpage == lastPage){%>
-	    				<li class="disabled">
-	    					<a aria-label="Next">
-				        		<span aria-hidden="true">&raquo;</span>
-				      		</a>
-				      	</li>
-	    			<%}else{%>
-	    				<li>
-	    					<a href="<%=cp%>/userPagingList?page=<%=lastPage%>" aria-label="Next">
-				        		<span aria-hidden="true">&raquo;</span>
-				      		</a>
-				      	</li>
-				    <%} %>
+				    <c:choose>
+				    	<c:when test="${page == (lastPage)}">
+				    		<li class="disabled">
+	    						<a aria-label="Next">
+				        			<span aria-hidden="true">&raquo;</span>
+				      			</a>
+				      		</li>
+				    	</c:when>
+				    	<c:otherwise>
+				    		<li>
+	    						<a href="${pageContext.servletContext.contextPath}/userPagingList?page=${lastPage}" aria-label="Next">
+				        			<span aria-hidden="true">&raquo;</span>
+				      			</a>
+				      		</li>
+				    	</c:otherwise>
+				    </c:choose>
 				  </ul>
 				</nav>
           </div>
@@ -152,7 +148,7 @@
 			
 		});
 	</script>
-	<form id ="frm" action="<%=request.getContextPath()%>/user" method="get">
+	<form id ="frm" action="${pageContext.servletContext.contextPath}/user" method="get">
 		<input type="hidden" id="userId" name="userId"/>
 	</form>
   </body>

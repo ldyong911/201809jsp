@@ -3,7 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,7 +20,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="${pageContext.servletContext.contextPath}/css/dashboard.css" rel="stylesheet">
+    <link href="<%=request.getContextPath() %>/css/dashboard.css" rel="stylesheet">
 	
   </head>
 
@@ -46,15 +45,74 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach items="${lprodList}" var="lprod">
-                	<tr class="lprodTr" data-lprodgu="${lprod.lprod_gu}">
-                		<td>${lprod.lprod_id}</td>
-                		<td>${lprod.lprod_gu}</td>
-                		<td>${lprod.lprod_nm}</td>
-                	</tr>
-                </c:forEach>
+                <%
+                	List<LprodVO> lprodList = (List<LprodVO>)request.getAttribute("lprodList");
+    		
+    				for(int i=0; i<lprodList.size(); i++){
+    					//data-변수이름 을 통해 JQuery로 $(this).data("변수이름") 이렇게 값을 가져올 수 있음
+    					//예)data-lprodgu를 통해 JQuery로 $(this).data("lprodgu") 이렇게 값을 가져올 수 있음
+    					out.write("<tr class='lprodTr' data-lprodgu='" + lprodList.get(i).getLprod_gu() + "'>");
+    					out.write("<td>"+lprodList.get(i).getLprod_id()+"</td>");
+    					out.write("<td>"+lprodList.get(i).getLprod_gu()+"</td>");
+    					out.write("<td>"+lprodList.get(i).getLprod_nm()+"</td>");
+    					out.write("</tr>");
+    				}
+                %>
+                
               </tbody>
             </table>
+            	<%
+            		int lprodCnt = (Integer)request.getAttribute("lprodCnt");
+            		int pageSize = (Integer)request.getAttribute("pageSize");
+            		int cpage = (Integer)request.getAttribute("page");
+            		int lastPage = (int)Math.ceil((lprodCnt*1.0)/pageSize);
+            		String cp = request.getContextPath();
+            	%>
+            	
+            	<nav style="text-align:center;"> 
+				  <ul class="pagination">
+				  	<!-- 첫번째 페이지 -->
+				  	<%if(cpage == 1){%>
+	    				<li class="disabled">
+	    					<a aria-label="Previous">
+				        		<span aria-hidden="true">&laquo;</span>
+				      		</a>
+				      	</li>
+	    			<%}else{%>
+	    				<li>
+	    					<a href="<%=cp%>/lprodPagingList?page=1" aria-label="Previous">
+				        		<span aria-hidden="true">&laquo;</span>
+				      		</a>
+				      	</li>
+				    <%} %>
+				    
+				    <!-- 페이지 -->
+				    <%
+            			for(int i=1; i<=lastPage; i++ ){%>
+		            		<li
+		            			<%if(i == cpage){%>
+				    				class="active"
+				    			<%}%>
+				    		><a href="<%=cp%>/lprodPagingList?page=<%=i%>"><%=i%></a>
+				    		</li>
+            		<%	}%>
+            		
+            		<!-- 마지막페이지 -->
+            		<%if(cpage == lastPage){%>
+	    				<li class="disabled">
+	    					<a aria-label="Next">
+				        		<span aria-hidden="true">&raquo;</span>
+				      		</a>
+				      	</li>
+	    			<%}else{%>
+	    				<li>
+	    					<a href="<%=cp%>/lprodPagingList?page=<%=lastPage %>" aria-label="Next">
+				        		<span aria-hidden="true">&raquo;</span>
+				      		</a>
+				      	</li>
+				    <%} %>
+				  </ul>
+				</nav>
           </div>
         </div>
       </div>
@@ -95,7 +153,7 @@
 			
 		});
 	</script>
-	<form id ="frm" action="${pageContext.servletContext.contextPath}/prodList" method="get">
+	<form id ="frm" action="<%=request.getContextPath()%>/prodList" method="get">
 		<input type="hidden" id="lprod_gu" name="lprod_gu"/>
 	</form>
   </body>

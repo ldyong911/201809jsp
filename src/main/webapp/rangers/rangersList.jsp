@@ -34,7 +34,8 @@
 		<tr>
 			<th>이름</th>
 		</tr>
-		<c:forEach items="${rangersList}" var="ranger"> <!-- items에 속성명으로 세팅, var는 내가 사용할 변수를 지정 -->
+		<!-- items에 속성명으로 세팅, var는 내가 사용할 변수를 지정 -->
+		<c:forEach items="${rangersList}" var="ranger">
 			<tr>
 				<td>${ranger}</td>
 			</tr>

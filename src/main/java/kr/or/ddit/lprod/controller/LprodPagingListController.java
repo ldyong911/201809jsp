@@ -38,11 +38,13 @@ public class LprodPagingListController extends HttpServlet {
 		Map<String, Object> resultMap = lprodService.selectLprodPagingList(pageVO);
 		List<LprodVO> lprodList = (List<LprodVO>)resultMap.get("lprodList");
 		int lprodCnt = (Integer)resultMap.get("lprodCnt");
+		int lastPage = (int)Math.ceil((lprodCnt*1.0)/pageSize);
 		
 		request.setAttribute("lprodList", lprodList);
 		request.setAttribute("lprodCnt", lprodCnt);
 		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("page", page);
+		request.setAttribute("lastPage", lastPage);
 		
 		request.getRequestDispatcher("/lprod/lprodPagingList.jsp").forward(request, response);
 	}
