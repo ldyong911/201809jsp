@@ -15,7 +15,7 @@
 	
 	<h2>number -> formatted string</h2>
 	<h3>한국 - ko</h3>
-	<fmt:setLocale value="ko_kr"/>
+	<fmt:setLocale value="ko_kr"/> <!-- 국제화태그에서 나라코드는 oracle에서 참고 -->
 	<!-- type : number, percent, currency -->
 	ko number : <fmt:formatNumber value="${num}" type="number"></fmt:formatNumber> <br>
 	ko percent : <fmt:formatNumber value="1" type="percent"></fmt:formatNumber> <br>

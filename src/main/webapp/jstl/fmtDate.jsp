@@ -19,6 +19,7 @@
 	<h3>한국 - ko</h3>
 	<fmt:setLocale value="ko_kr"/>
 	ko date : <fmt:formatDate value="${now}"/> <br>
+	<!-- 보통은 pattern을 정의해서 사용 -->
 	ko date pattern : <fmt:formatDate value="${now}" pattern="yyyy.MM.dd"/> <br>
 	
 	<h3>독일 - de</h3>

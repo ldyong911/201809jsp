@@ -29,8 +29,9 @@
 	<script>
 		$(document).ready(function(){
 			//select box selected 적용
-			$("#langSelect > option").attr("selected", false);
+			$("#langSelect > option").attr("selected", false); //처음 selectbox 선택 초기화
 			$("#langSelect > option[value=${lang}]").attr("selected", true); //js에서 el를 사용할땐 ""안에 사용
+			                                                                 //el은 단지 치환되는것이기때문임
 			
 			$("#langSelect").on("change", function(){
 				$("#frm").submit();

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %> <!-- 커스텀태그는 디렉토리 지정 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<!-- loggings나 colorLogging는 tags 디렉토리에 tag파일명을 의미 -->
 	<h2>loggings.tag</h2>
 	logging.jsp 출력 <br>
 	<tags:loggings/>
