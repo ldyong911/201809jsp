@@ -16,17 +16,16 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.user.model.UserVO;
 
 @WebFilter("/*")
-public class LoginCheckFilter implements Filter {
+public class LoginCheckFilter implements Filter{
 
-    public LoginCheckFilter() {
-    	
-    }
-    
-    public void init(FilterConfig fConfig) throws ServletException {
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
 		
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
 		
 		System.out.println("LoginCheckFilter doFilter");
 		
@@ -69,7 +68,9 @@ public class LoginCheckFilter implements Filter {
 		//후처리
 	}
 
+	@Override
 	public void destroy() {
 		
 	}
+
 }
