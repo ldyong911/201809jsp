@@ -71,9 +71,9 @@ public class UserFormController extends HttpServlet {
 			if(result == 1){
 				//db에서 데이터를 조작하는 로직을 처리할때는 forward가 아니라 redirect를 사용해야함(새로고침시 최초요청 url로 다시 이동하기때문에)
 				//redirect는 ContextPath를 써줘야하며 redirect는 get방식임
-				//request.getRequestDispatcher("/userPagingList").forward(request, response);;
+				//request.getRequestDispatcher("/userPagingList").forward(request, response);
 				request.getSession().setAttribute("msg", "정상 등록 되었습니다.");
-				response.sendRedirect(request.getContextPath()+"/userPagingList");
+				response.sendRedirect(request.getContextPath() + "/userPagingList");
 			}
 			//정상입력(실패)
 			else{
