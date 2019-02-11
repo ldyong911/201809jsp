@@ -34,7 +34,7 @@ public class UserFormController extends HttpServlet {
 	 * Method 설명 : 사용자 등록 폼
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/user/userForm.jsp").forward(request, response);;
+		request.getRequestDispatcher("/user/userForm.jsp").forward(request, response);
 	}
 
 	/**
