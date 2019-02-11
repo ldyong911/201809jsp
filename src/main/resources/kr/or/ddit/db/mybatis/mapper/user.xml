@@ -13,7 +13,7 @@
   <select id="selectUser" resultType="UserVO" parameterType="String">
   	select *
   	  from users
-  	 where userId = #{sss}
+  	 where userId = #{userId}
   </select>
   
   <!-- 사용자 페이징 조회 -->
@@ -33,5 +33,26 @@
   	select count(*)
       from users
   </select>
+  
+  <!-- 사용자 입력 -->
+  <insert id="insertUser" parameterType="UserVO">
+  	insert into users(userId, userNm, alias, addr1, addr2, zipcode, pass, reg_dt)
+	values(#{userId}, #{userNm}, #{alias}, #{addr1}, #{addr2}, #{zipcode}, #{pass}, sysdate)
+  </insert>
+  
+  <!-- 사용자 삭제 -->
+  <delete id="deleteUser" parameterType="String">
+  	delete from users
+  	where userId = #{userId}
+  </delete>
+  
+  <!-- 사용자 수정 -->
+  <update id="updateUser" parameterType="UserVO">
+  	update users
+  	   set userNm=#{userNm}, alias=#{alias},
+  	   	   addr1=#{addr1}, addr2=#{addr2}, zipcode=#{zipcode},
+  	   	   pass=#{pass} 
+  	 where userId=#{userId}
+  </update>
   
 </mapper>

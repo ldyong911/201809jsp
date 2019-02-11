@@ -6,18 +6,33 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.db.mybatis.MybatisSqlSessionFactory;
 import kr.or.ddit.user.model.UserVO;
 import kr.or.ddit.util.model.PageVO;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class UserServiceImplTest {
+	private SqlSession sqlSession;
 	private IUserService userService;
 	
 	@Before
 	public void setup(){
+		SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();
+		sqlSession = sqlSessionFactory.openSession();
+		
 		userService = new UserServiceImpl();
+		
+		userService.deleteUser("test1");
+	}
+	
+	@After
+	public void tearDown(){
+		sqlSession.close();
 	}
 
 	@Test
@@ -66,6 +81,44 @@ public class UserServiceImplTest {
 		
 		//userCnt
 		assertEquals(105, userCnt);
+	}
+	
+	@Test
+	public void testInsertUser(){
+		/***Given***/
+		UserVO userVO = new UserVO();
+		userVO.setUserId("test1");
+		userVO.setUserNm("테스트");
+		userVO.setAlias("테스트별명");
+		userVO.setAddr1("대전 중구 대흥로 76");
+		userVO.setAddr2("2층 ddit");
+		userVO.setZipcode("34942");
+		userVO.setPass("testPass");
+		
+		/***When***/
+		int result = userService.insertUser(userVO);
+		
+		/***Then***/
+		assertEquals(1, result);
+	}
+	
+	@Test
+	public void testUpdateUser(){
+		/***Given***/
+		UserVO userVO = new UserVO();
+		userVO.setUserId("brown2");
+		userVO.setUserNm("테스트");
+		userVO.setAlias("테스트별명");
+		userVO.setAddr1("대전 중구 대흥로 76");
+		userVO.setAddr2("2층 ddit");
+		userVO.setZipcode("34942");
+		userVO.setPass("testPass");
+		
+		/***When***/
+		int result = userService.updateUser(userVO);
+		
+		/***Then***/
+		assertEquals(1, result);
 	}
 	
 }
