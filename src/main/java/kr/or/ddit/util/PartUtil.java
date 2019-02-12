@@ -8,6 +8,7 @@ public class PartUtil {
 		
 		for(String split : splits){
 			if(split.startsWith("filename=")){
+				//"로 시작되고 "로 끝나는 단어 자르기
 				fileName = split.substring(split.indexOf("\"")+1, split.lastIndexOf("\""));
 			}
 		}
