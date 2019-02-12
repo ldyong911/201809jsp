@@ -85,7 +85,7 @@ public class FileUploadServlet extends HttpServlet {
 			String uuidFilename = UUID.randomUUID().toString(); //랜덤으로 중복되지않게 id값 생성
 			//fileUploadPart.write(UPLOAD_PATH + uuidFilename);
 			
-			//server.core\\tmp0\\wtpwebapps\\jsp\\uploadreal.jpg --> uploadreal\real.jpg
+			//server.core\\tmp0\\wtpwebapps\\jsp\\uploadreal.jpg --> upload\real.jpg
 			fileUploadPart.write(path + File.separator + uuidFilename); //os마다 경로구분자가 다르기때문에 File 클래스에서 제공되는 separator 사용
 			fileUploadPart.delete(); //디스크 사용후 남아있는 데이터삭제
 		}
