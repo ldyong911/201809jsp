@@ -7,7 +7,7 @@
 		</layout>
 	</appender>
 
-	<logger name="kr.or.ddit" level="info"/>
+	<logger name="kr.or.ddit" level="DEBUG"/>
     
 	<root level="DEBUG">
    		<appender-ref ref="console" />

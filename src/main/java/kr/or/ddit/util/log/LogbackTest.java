@@ -1,5 +1,8 @@
 package kr.or.ddit.util.log;
 
+//simple logging facade 4 java
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +22,7 @@ public class LogbackTest {
 		logger.info("info " + "test");
 		logger.warn("warn " + "test");
 		logger.error("error " + "test");
-		logger.error("error {}, {}, {}", "test", "test2", "test3"); //{}를 사용할때는 +대신 ,를 쓰며 인자를 의미
+		logger.error("error {}, {}, {}", "test", "test2", new HashMap()); //{}를 사용할때는 +대신 ,를 쓰며 인자를 의미
 	}
 	
 	public static void main(String[] args) {
