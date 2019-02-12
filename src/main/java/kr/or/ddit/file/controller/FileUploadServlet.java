@@ -60,11 +60,14 @@ public class FileUploadServlet extends HttpServlet {
 		//part 정보 확인
 		//request.getPart(name);
 		//request.getParts();
-//		Collection<Part> parts = request.getParts();
-//		for(Part part : parts){
-//			logger.debug("partName : {}", part.getName());
-//			logger.debug("Content-Disposition : {}", part.getHeader("Content-Disposition"));
-//		}
+		Collection<Part> parts = request.getParts();
+		logger.debug("=================================================================");
+		for(Part part : parts){
+			logger.debug("partHeaderNames : {}", part.getHeaderNames());
+			logger.debug("partName : {}", part.getName());
+			logger.debug("Content-Disposition : {}", part.getHeader("Content-Disposition"));
+		}
+		logger.debug("=================================================================");
 		
 		Part fileUploadPart = request.getPart("fileUpload");
 		//fileUploadPart.write("d:\\picture\\real.jpg");
