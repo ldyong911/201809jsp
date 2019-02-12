@@ -12,6 +12,8 @@ public class UserVO {
 	private String zipcode; //우편번호
 	private String pass; //사용자 비밀번호
 	private Date reg_dt; //등록일시
+	private String filename; //업로드파일명
+	private String realFilename; //실제파일경로
 	
 	public UserVO() {
 		
@@ -27,7 +29,7 @@ public class UserVO {
 		this.zipcode = zipcode;
 		this.pass = pass;
 	}
-	
+
 	public String getUserId() {
 		return userId;
 	}
@@ -45,7 +47,6 @@ public class UserVO {
 	public String getAlias() {
 		return alias;
 	}
-
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
@@ -85,18 +86,32 @@ public class UserVO {
 		this.reg_dt = reg_dt;
 	}
 
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getRealFilename() {
+		return realFilename;
+	}
+	public void setRealFilename(String realFilename) {
+		this.realFilename = realFilename;
+	}
+
 	//reg_dt 값을 yyyy-MM-dd 포맷팅
 	public String getReg_dt_fmt(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(reg_dt);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "UserVO [userId=" + userId + ", userNm=" + userNm + ", alias="
 				+ alias + ", addr1=" + addr1 + ", addr2=" + addr2
 				+ ", zipcode=" + zipcode + ", pass=" + pass + ", reg_dt="
-				+ reg_dt + "]";
+				+ reg_dt + ", filename=" + filename + ", realFilename="
+				+ realFilename + "]";
 	}
-
 }

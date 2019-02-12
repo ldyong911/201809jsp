@@ -1,6 +1,8 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,10 +34,26 @@
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1 class="page-header">사용자 정보 조회</h1>
-				<form class="form-horizontal" role="form">
-					<%
-//           				UserVO user = (UserVO)request.getAttribute("userVO");
-          			%>
+				<form action="${pageContext.request.contextPath}/userModifyForm" method="get"
+					  class="form-horizontal" role="form">
+					  
+					<input type="hidden" id="userId" name="userId" value="${userVO.userId}"/>
+					
+					<div class="form-group">
+						<label for="userId" class="col-sm-2 control-label">사진</label>
+						<div class="col-sm-10">
+							<img src="${pageContext.request.contextPath}/profileImg?userId=${userVO.userId}"/>
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${userVO.filename == null}"> --%>
+<%-- 									<img src="${pageContext.request.contextPath}/upload/noimg.png"/> --%>
+<%-- 								</c:when> --%>
+<%-- 								<c:otherwise> --%>
+<%-- 									<img src="${pageContext.request.contextPath}/upload/${userVO.filename}"/> --%>
+<%-- 								</c:otherwise> --%>
+<%-- 							</c:choose> --%>
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<label for="userId" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
@@ -88,18 +106,18 @@
 					<div class="form-group">
 						<label for="reg_dt" class="col-sm-2 control-label">등록일자</label>
 						<div class="col-sm-10">
-							<label class="control-label">${userVO.reg_dt_fmt}</label>
+							<label class="control-label">
+								<fmt:formatDate value="${userVO.reg_dt}" pattern="yyyy-MM-dd"/>
+							</label>
 						</div>
 					</div>
-				</form>
 				
-				<form action="${pageContext.request.contextPath}/userModifyForm" method="get">
-					<input type="hidden" id="userId" name="userId" value="${userVO.userId}"/>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<button type="submit" class="btn btn-default">사용자 수정</button>
 						</div>
 					</div>
+					
 				</form>
 			</div>
 		</div>
