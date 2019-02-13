@@ -2,6 +2,7 @@ package kr.or.ddit.user.dao;
 
 import java.util.List;
 
+import kr.or.ddit.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.user.model.UserVO;
 import kr.or.ddit.util.model.PageVO;
 
@@ -108,6 +109,22 @@ public class UserDaoImpl implements IUserDao{
 	@Override
 	public int updateUser(SqlSession sqlSession, UserVO userVO) {
 		int result = sqlSession.update("user.updateUser", userVO);
+		
+		return result;
+	}
+
+	/**
+	 * Method : encryptPass
+	 * 작성자 : pc11
+	 * 변경이력 :
+	 * @param sqlSession
+	 * @param userVO
+	 * @return
+	 * Method 설명 : 사용자 비밀번호 암호화
+	 */
+	@Override
+	public int encryptPass(SqlSession sqlSession, UserVO userVO) {
+		int result = sqlSession.update("user.updatePass", userVO);
 		
 		return result;
 	}

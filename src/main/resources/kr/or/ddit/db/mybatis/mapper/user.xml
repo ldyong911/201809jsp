@@ -56,4 +56,11 @@
   	 where userId=#{userId}
   </update>
   
+  <!-- 사용자 비밀번호 암호화 -->
+  <update id="updatePass" parameterType="UserVO">
+  	update users
+  	   set pass = #{pass}
+  	 where userId = #{userId}
+  </update>
+  
 </mapper>

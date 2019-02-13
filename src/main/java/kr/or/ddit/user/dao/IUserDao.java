@@ -75,4 +75,15 @@ public interface IUserDao {
 	 * Method 설명 : 사용자 수정
 	 */
 	int updateUser(SqlSession sqlSession, UserVO userVO);
+	
+	/**
+	 * Method : encryptPass
+	 * 작성자 : pc11
+	 * 변경이력 :
+	 * @param sqlSession
+	 * @param userVO
+	 * @return
+	 * Method 설명 : 사용자 비밀번호 암호화
+	 */
+	int encryptPass(SqlSession sqlSession, UserVO userVO);
 }

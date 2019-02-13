@@ -121,4 +121,17 @@ public class UserServiceImplTest {
 		assertEquals(1, result);
 	}
 	
+	@Test
+	public void testEncryptPass(){
+		/***Given***/
+		List<UserVO> userList = userService.getAllUser();
+		
+		/***When***/
+		int result = userService.encryptPass();
+		
+		/***Then***/
+		assertEquals(1, result);
+		
+	}
+	
 }

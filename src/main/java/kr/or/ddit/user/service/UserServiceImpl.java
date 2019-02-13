@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import kr.or.ddit.db.mybatis.MybatisSqlSessionFactory;
+import kr.or.ddit.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.user.dao.IUserDao;
 import kr.or.ddit.user.dao.UserDaoImpl;
 import kr.or.ddit.user.model.UserVO;
@@ -128,6 +129,34 @@ public class UserServiceImpl implements IUserService {
 	public int updateUser(UserVO userVO) {
 		sqlSession = sqlSessionFactory.openSession();
 		int result = userDao.updateUser(sqlSession, userVO);
+		sqlSession.commit(); //트랜잭션이 발생되는 쿼리이기때문에 commit해줘야함
+		sqlSession.close();
+		
+		return result;
+	}
+
+	/**
+	 * Method : encryptPass
+	 * 작성자 : pc11
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 사용자 비밀번호 수정
+	 */
+	@Override
+	public int encryptPass() {
+		sqlSession = sqlSessionFactory.openSession();
+		
+		List<UserVO> userList = userDao.getAllUser(sqlSession);
+		
+		int result = 0;
+		for(UserVO userVO : userList){
+			String pass = userVO.getPass();
+			String encryptPass = KISA_SHA256.encrypt(pass);
+			userVO.setPass(encryptPass);
+			
+			result += userDao.encryptPass(sqlSession, userVO);
+		}
+		
 		sqlSession.commit(); //트랜잭션이 발생되는 쿼리이기때문에 commit해줘야함
 		sqlSession.close();
 		
