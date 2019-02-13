@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.user.model.UserVO;
 import kr.or.ddit.user.service.IUserService;
 import kr.or.ddit.user.service.UserServiceImpl;
@@ -51,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 		UserVO userVO = userService.selectUser(userId);
 		
 		//db의 정보와 사용자 파라미터 정보가 일치하는 경우 --> main.jsp
-		if(userVO.getUserId().equals(userId) && userVO.getPass().equals(password)){
+		if(userVO.getUserId().equals(userId) && userVO.getPass().equals(KISA_SHA256.encrypt(password))){
 			
 			//사용자 정보를 session에 저장한다
 			//userVO 객체는 session이 유지될 동안 다른 페이지에서 사용

@@ -138,19 +138,4 @@ public class UserDaoImplTest {
 		assertEquals(1, result);
 	}
 	
-	@Test
-	public void testEncryptPass(){
-		/***Given***/
-		List<UserVO> userList = userDao.getAllUser(sqlSession);
-		
-		/***When***/
-		int result = 0;
-		for(UserVO userVO : userList){
-			result = userDao.encryptPass(sqlSession, userVO);
-		}
-		
-		/***Then***/
-		assertEquals(1, result);
-		
-	}
 }
