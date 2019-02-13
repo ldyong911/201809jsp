@@ -36,9 +36,19 @@
 				<h1 class="page-header">사용자 정보 조회</h1>
 				
 				<form id="frm" action="${pageContext.request.contextPath}/userModifyForm" method="post"
-					class="form-horizontal" role="form">
+					class="form-horizontal" role="form" enctype="multipart/form-data">
+					
 					<div class="form-group">
-						<label for="userNm" class="col-sm-2 control-label">사용자 아이디</label>
+						<label for="profile" class="col-sm-2 control-label">사진</label>
+						<div class="col-sm-10">
+							<img src=""/>
+							<input type="file" class="form-control" id="profile" name="profile"
+								placeholder="사진" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="userId" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="userId" name="userId"
 								placeholder="사용자 아이디" readonly />
@@ -54,7 +64,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="userNm" class="col-sm-2 control-label">별명</label>
+						<label for="alias" class="col-sm-2 control-label">별명</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="alias" name="alias"
 								placeholder="별명" />
@@ -62,7 +72,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="userNm" class="col-sm-2 control-label">주소1</label>
+						<label for="addr1" class="col-sm-2 control-label">주소1</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="addr1" name="addr1"
 								placeholder="주소" readonly />
@@ -70,7 +80,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="userNm" class="col-sm-2 control-label">주소2</label>
+						<label for="addr2" class="col-sm-2 control-label">주소2</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="addr2" name="addr2"
 								placeholder="상세주소" />
@@ -78,7 +88,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="userNm" class="col-sm-2 control-label">우편번호</label>
+						<label for="zipcode" class="col-sm-2 control-label">우편번호</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="zipcode"
 								name="zipcode" placeholder="우편번호" readonly />
@@ -125,15 +135,9 @@
 			$("#addr2").val("${userVO.addr2}");
 			$("#zipcode").val("${userVO.zipcode}");
 			$("#pass").val("${userVO.pass}");
-		}
-		function clearData(){
-			$("#userId").val();
-			$("#userNm").val();
-			$("#alias").val();
-			$("#addr1").val();
-			$("#addr2").val();
-			$("#zipcode").val();
-			$("#pass").val();
+			
+			//이미지 값 추가
+			$("img").attr("src", "${pageContext.request.contextPath}/profileImg?userId=${userVO.userId}");
 		}
 		
 		$(document).ready(function(){
@@ -167,7 +171,7 @@
 				}).open();
 			});
 			
-			//사용자 등록 버튼 클릭 이벤트
+			//사용자 수정 버튼 클릭 이벤트
 			$("#regBtn").on("click", function(){
 				//사용자 아이디(생략)
 				

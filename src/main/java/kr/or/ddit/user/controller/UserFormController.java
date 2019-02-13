@@ -1,18 +1,23 @@
 package kr.or.ddit.user.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import kr.or.ddit.user.model.UserVO;
 import kr.or.ddit.user.service.IUserService;
 import kr.or.ddit.user.service.UserServiceImpl;
+import kr.or.ddit.util.PartUtil;
 
 @WebServlet("/userForm")
+@MultipartConfig(maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
 public class UserFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -56,6 +61,9 @@ public class UserFormController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		UserVO duplicateUserVO = userService.selectUser(userId);
 		
+		String filename = "";
+		String realFilename = "";
+		
 		if(duplicateUserVO == null){
 			String userNm = request.getParameter("userNm");
 			String alias = request.getParameter("alias");
@@ -64,8 +72,31 @@ public class UserFormController extends HttpServlet {
 			String zipcode = request.getParameter("zipcode");
 			String pass = request.getParameter("pass");
 			
-			duplicateUserVO = new UserVO(userId, userNm, alias, addr1, addr2, zipcode, pass);
-			int result = userService.insertUser(duplicateUserVO);
+			UserVO userVO = new UserVO(userId, userNm, alias, addr1, addr2, zipcode, pass);
+			
+			//사용자 사진
+			Part profilePart = request.getPart("profile");
+			
+			//사용자가 사진을 올린경우
+			if(profilePart.getSize() > 0){
+				//사용자 테이블 파일명을 저장
+				//(실제 업로드한 파일명 - filename, 파일 충돌을 방지하기 위해 사용한 uuid - realFilename)
+				String contentDisposition = profilePart.getHeader("Content-Disposition");
+				filename = PartUtil.getFileNameFromPart(contentDisposition);
+				realFilename = "d:\\picture\\" + UUID.randomUUID().toString();
+				
+				//디스크에 기록(d:\picture\ + realFileName)
+				profilePart.write(realFilename);
+				profilePart.delete();
+			}
+			//사용자가 사진을 올리지 않은 경우 filename, realFilename 모두 공백(위에서 초기화한값)
+			
+			//파일명, uuid 세팅
+			userVO.setFilename(filename);
+			userVO.setRealFilename(realFilename);
+			
+			//사용자 등록
+			int result = userService.insertUser(userVO);
 			
 			//정상입력(성공)
 			if(result == 1){

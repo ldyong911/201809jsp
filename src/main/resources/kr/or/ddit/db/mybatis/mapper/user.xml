@@ -36,8 +36,8 @@
   
   <!-- 사용자 입력 -->
   <insert id="insertUser" parameterType="UserVO">
-  	insert into users(userId, userNm, alias, addr1, addr2, zipcode, pass, reg_dt)
-	values(#{userId}, #{userNm}, #{alias}, #{addr1}, #{addr2}, #{zipcode}, #{pass}, sysdate)
+  	insert into users(userId, userNm, alias, addr1, addr2, zipcode, pass, reg_dt, filename, realFilename)
+	values(#{userId}, #{userNm}, #{alias}, #{addr1}, #{addr2}, #{zipcode}, #{pass}, sysdate, #{filename}, #{realFilename})
   </insert>
   
   <!-- 사용자 삭제 -->
@@ -49,9 +49,10 @@
   <!-- 사용자 수정 -->
   <update id="updateUser" parameterType="UserVO">
   	update users
-  	   set userNm=#{userNm}, alias=#{alias},
-  	   	   addr1=#{addr1}, addr2=#{addr2}, zipcode=#{zipcode},
-  	   	   pass=#{pass} 
+  	   set userNm=#{userNm}, alias=#{alias}, addr1=#{addr1}, addr2=#{addr2}, zipcode=#{zipcode}, pass=#{pass},
+  	       <!-- mybatis에서 null값인 경우에는 처리를 못해주기때문에 명시적으로 jdbcType으로 처리해야함 -->
+  	       filename=nvl(#{filename, jdbcType=VARCHAR}, filename),
+  	       realFilename=nvl(#{realFilename, jdbcType=VARCHAR}, realFilename)
   	 where userId=#{userId}
   </update>
   
