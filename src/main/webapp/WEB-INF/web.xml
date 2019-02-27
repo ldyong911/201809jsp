@@ -25,16 +25,6 @@
     <servlet-name>timesTablesServlet</servlet-name>
     <url-pattern>/timesTablesServletUrl</url-pattern>
   </servlet-mapping>
-  
-<!--   <filter> -->
-<!--   	<filter-name>requestCountFilter</filter-name> -->
-<!--   	<filter-class>kr.or.ddit.filter.RequestCountFilter</filter-class> -->
-<!--   </filter> -->
-<!--   <filter-mapping> -->
-<!--   	<filter-name>requestCountFilter</filter-name> -->
-<!--   	<url-pattern>/*</url-pattern> -->
-<!--   </filter-mapping> -->
-  
   <context-param>
     <param-name>ADMIN</param-name>
     <param-value>sun</param-value>
@@ -57,17 +47,29 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+  <listener>
+    <listener-class>kr.or.ddit.listener.SessionListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>kr.or.ddit.listener.SessionAttributeListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>kr.or.ddit.listener.ContextPathListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>kr.or.ddit.listener.CurrentUserListener</listener-class>
+  </listener>
   
-  <listener>
-  	<listener-class>kr.or.ddit.listener.SessionListener</listener-class>
-  </listener>
-  <listener>
-  	<listener-class>kr.or.ddit.listener.SessionAttributeListener</listener-class>
-  </listener>
-  <listener>
-  	<listener-class>kr.or.ddit.listener.ContextPathListener</listener-class>
-  </listener>
-  <listener>
-  	<listener-class>kr.or.ddit.listener.CurrentUserListener</listener-class>
-  </listener>
+  <servlet>
+    <servlet-name>velocity</servlet-name>
+    <servlet-class>org.apache.velocity.tools.view.VelocityViewServlet</servlet-class>
+    <init-param>
+    	<param-name>org.apache.velocity.properties</param-name>
+    	<param-value>WEB-INF/config/velocity.properties</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>velocity</servlet-name>
+    <url-pattern>*.vm</url-pattern>
+  </servlet-mapping>
 </web-app>

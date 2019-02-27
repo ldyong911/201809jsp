@@ -85,6 +85,24 @@
 	    <artifactId>logback-classic</artifactId>
 	    <version>1.2.3</version>
 	</dependency>
+
+	<dependency>
+		<groupId>org.apache.velocity.tools</groupId>
+		<artifactId>velocity-tools-generic</artifactId>
+		<version>3.0</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.velocity.tools</groupId>
+		<artifactId>velocity-tools-view</artifactId>
+		<version>3.0</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.velocity.tools</groupId>
+		<artifactId>velocity-tools-view-jsp</artifactId>
+		<version>3.0</version>
+	</dependency>
 	
   </dependencies>
   
